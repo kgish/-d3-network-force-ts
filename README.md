@@ -28,6 +28,21 @@ index.html
 </script>
 ```
 
+package.json
+```
+{
+  "name": "d3-network-force-ts",
+  ...
+  "devDependencies": {
+    "@types/d3": "^4.13.15",
+    ...
+  },
+  "dependencies": {
+    "d3": "^4.13.0"
+  }
+}
+```
+
 ## References
 
 * [d3](https://d3js.org)
