@@ -12,13 +12,14 @@ In order to get the demo working properly, I had to make the following changes.
 
 Added the following 
 
-main.js
+main.ts
 ```
 export { d3, forceProperties, updateAll };
 ```
 
 index.html
 ```
+<script type="module" src="./src/main.ts"></script>
 <script type="module">
   import { d3, forceProperties, updateAll } from "./main.js";
   window.d3 = d3;
