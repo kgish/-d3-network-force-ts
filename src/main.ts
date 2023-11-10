@@ -2,37 +2,15 @@ import './style.css'
 
 import * as d3 from 'd3';
 
-let svg = d3.select("svg"),
-    // @ts-ignore
-    width = +svg.node()!.getBoundingClientRect().width,
-    // @ts-ignore
-    height = +svg.node()!.getBoundingClientRect().height;
+let svg: any, width: any, height: any;
 
 // svg objects
 let link: any, node: any;
 // the data - an object with nodes and links
 let graph: any;
 
-// load the data
-// @ts-ignore
-d3.json("miserables.json", (error, _graph) => {
-    if (error) throw error;
-    graph = _graph;
-    initializeDisplay();
-    initializeSimulation();
-});
-
-//////////// FORCE SIMULATION ////////////
-
 // force simulator
-const simulation = d3.forceSimulation();
-
-// set up the simulation and event to update locations after each tick
-const initializeSimulation = () => {
-    simulation.nodes(graph.nodes);
-    initializeForces();
-    simulation.on("tick", ticked);
-}
+let simulation: any;
 
 // values for all forces
 const forceProperties = {
@@ -69,6 +47,14 @@ const forceProperties = {
     }
 }
 
+// set up the simulation and event to update locations after each tick
+const initializeSimulation = () => {
+    simulation = d3.forceSimulation();
+    simulation.nodes(graph.nodes);
+    initializeForces();
+    simulation.on("tick", ticked);
+}
+
 // add forces to the simulation
 const initializeForces = () => {
     // add forces and associate each with a name
@@ -86,9 +72,8 @@ const initializeForces = () => {
 // apply new force properties
 const updateForces = () => {
     // get each force by name and update the properties
-    console.log(forceProperties);
     // @ts-ignore
-    simulation.force("center").x(width * (forceProperties.center.x ? 1 : 0))
+    simulation.force("center").x(width * forceProperties.center.x)
         .y(height * forceProperties.center.y);
     // @ts-ignore
     simulation.force("charge").strength(forceProperties.charge.strength * (forceProperties.charge.enabled ? 1 : 0))
@@ -174,36 +159,52 @@ const ticked = () => {
 
 //////////// UI EVENTS ////////////
 
-const dragstarted = (event: any, d: any) => {
-    if (!event.active) simulation.alphaTarget(0.3).restart();
+const dragstarted = (d: any) => {
+    if (!d3.event.active) simulation.alphaTarget(0.3).restart();
     d.fx = d.x;
     d.fy = d.y;
 }
 
-const dragged = (event: any, d: any) => {
-    d.fx = event.x;
-    d.fy = event.y;
+const dragged = (d: any) => {
+    d.fx = d3.event.x;
+    d.fy = d3.event.y;
 }
 
-const dragended = (event: any, d: any) => {
-    if (!event.active) simulation.alphaTarget(0.0001);
+const dragended = (d: any) => {
+    if (!d3.event.active) simulation.alphaTarget(0.0001);
     d.fx = null;
     d.fy = null;
 }
-
-// update size-related forces
-d3.select(window).on("resize", () => {
-    // @ts-ignore
-    width = +svg.node()!.getBoundingClientRect().width;
-    // @ts-ignore
-    height = +svg.node()!.getBoundingClientRect().height;
-    updateForces();
-});
 
 // convenience function to update everything (run after UI input)
 const updateAll = () => {
     updateForces();
     updateDisplay();
 }
+
+function onLoaded(_event: any) {
+    svg = d3.select("svg");
+    // @ts-ignore
+    width = +svg.node()!.getBoundingClientRect().width;
+    // @ts-ignore
+    height = +svg.node()!.getBoundingClientRect().height;
+
+    // load the data
+    d3.json("miserables.json", (error: any, _graph: any) => {
+        if (error) throw error;
+        graph = _graph;
+        initializeDisplay();
+        initializeSimulation();
+
+        // update size-related forces
+        d3.select(window).on("resize", () => {
+            width = +svg.node().getBoundingClientRect().width;
+            height = +svg.node().getBoundingClientRect().height;
+            updateForces();
+        });
+    });
+}
+
+window.addEventListener("load", (event) => onLoaded(event));
 
 export { d3, forceProperties, updateAll };
