@@ -4,7 +4,7 @@ This demo lets you interactively try various settings and combinations of forces
 
 It's based on [Mike Bostock's](https://bost.ocks.org/) example code for a [force directed graph](http://bl.ocks.org/mbostock/2675ff61ea5e063ede2b5d63c08020c7).
 
-Using version `d3.v4` : `typescript-js`.
+Using version `d3.v4` : `vanilla-ts`.
 
 ## Caveats
 
