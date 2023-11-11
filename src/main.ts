@@ -182,26 +182,23 @@ const updateAll = () => {
     updateDisplay();
 }
 
-function onLoaded(_event: any) {
+async function onLoaded(_event: any) {
     svg = d3.select("svg");
     // @ts-ignore
     width = +svg.node()!.getBoundingClientRect().width;
     // @ts-ignore
     height = +svg.node()!.getBoundingClientRect().height;
 
-    // load the data
-    d3.json("miserables.json", (error: any, _graph: any) => {
-        if (error) throw error;
-        graph = _graph;
-        initializeDisplay();
-        initializeSimulation();
+    // Load the data, see: https://github.com/d3/d3/blob/main/CHANGES.md#changes-in-d3-50
+    graph = await d3.json("miserables.json");
+    initializeDisplay();
+    initializeSimulation();
 
-        // update size-related forces
-        d3.select(window).on("resize", () => {
-            width = +svg.node().getBoundingClientRect().width;
-            height = +svg.node().getBoundingClientRect().height;
-            updateForces();
-        });
+    // update size-related forces
+    d3.select(window).on("resize", () => {
+        width = +svg.node().getBoundingClientRect().width;
+        height = +svg.node().getBoundingClientRect().height;
+        updateForces();
     });
 }
 
