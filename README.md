@@ -50,12 +50,12 @@ package.json
 {
   "name": "d3-network-force-ts",
   ...
-  "devDependencies": {
-    "@types/d3": "^4.13.15",
-    ...
-  },
   "dependencies": {
-    "d3": "^4.13.0"
+    "d3": "^5.16.0"
+  },
+  "devDependencies": {
+    "@types/d3": "^5.16.7",
+    ...
   }
 }
 ```
