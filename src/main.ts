@@ -159,19 +159,19 @@ const ticked = () => {
 
 //////////// UI EVENTS ////////////
 
-const dragstarted = (d: any) => {
-    if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+const dragstarted = (event: any, d: any) => {
+    if (!event.active) simulation.alphaTarget(0.3).restart();
     d.fx = d.x;
     d.fy = d.y;
 }
 
-const dragged = (d: any) => {
-    d.fx = d3.event.x;
-    d.fy = d3.event.y;
+const dragged = (event: any, d: any) => {
+    d.fx = event.x;
+    d.fy = event.y;
 }
 
-const dragended = (d: any) => {
-    if (!d3.event.active) simulation.alphaTarget(0.0001);
+const dragended = (event: any, d: any) => {
+    if (!event.active) simulation.alphaTarget(0.0001);
     d.fx = null;
     d.fy = null;
 }
@@ -190,6 +190,7 @@ function onLoaded(_event: any) {
     height = +svg.node()!.getBoundingClientRect().height;
 
     // load the data
+    // @ts-ignore
     d3.json("miserables.json", (error: any, _graph: any) => {
         if (error) throw error;
         graph = _graph;
@@ -202,7 +203,7 @@ function onLoaded(_event: any) {
             height = +svg.node().getBoundingClientRect().height;
             updateForces();
         });
-    });
+    }).then();
 }
 
 window.addEventListener("load", (event) => onLoaded(event));
