@@ -6,6 +6,10 @@ It's based on [Mike Bostock's](https://bost.ocks.org/) example code for a [force
 
 Using version `d3.v4` : `vanilla-ts`.
 
+## Screenshot
+
+![screenshot.png](public/screenshot.png)
+
 ## Caveats
 
 In order to get the demo working properly, I had to make the following changes.
