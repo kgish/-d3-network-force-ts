@@ -72,24 +72,18 @@ const initializeForces = () => {
 // apply new force properties
 const updateForces = () => {
     // get each force by name and update the properties
-    // @ts-ignore
     simulation.force("center").x(width * forceProperties.center.x)
         .y(height * forceProperties.center.y);
-    // @ts-ignore
     simulation.force("charge").strength(forceProperties.charge.strength * (forceProperties.charge.enabled ? 1 : 0))
         .distanceMin(forceProperties.charge.distanceMin)
         .distanceMax(forceProperties.charge.distanceMax);
-    // @ts-ignore
     simulation.force("collide").strength(forceProperties.collide.strength * (forceProperties.collide.enabled ? 1 : 0))
         .radius(forceProperties.collide.radius)
         .iterations(forceProperties.collide.iterations);
-    // @ts-ignore
     simulation.force("forceX").strength(forceProperties.forceX.strength * (forceProperties.forceX.enabled ? 1 : 0))
         .x(width * forceProperties.forceX.x);
-    // @ts-ignore
     simulation.force("forceY").strength(forceProperties.forceY.strength * (forceProperties.forceY.enabled ? 1 : 0))
         .y(height * forceProperties.forceY.y);
-    // @ts-ignore
     simulation.force("link").id((d: any) => d.id)
         .distance(forceProperties.link.distance)
         .iterations(forceProperties.link.iterations)
@@ -117,7 +111,6 @@ const initializeDisplay = () => {
         .selectAll("circle")
         .data(graph.nodes)
         .enter().append("circle")
-        // @ts-ignore
         .call(d3.drag()
             .on("start", dragstarted)
             .on("drag", dragged)
@@ -184,9 +177,7 @@ const updateAll = () => {
 
 async function onLoaded(_event: any) {
     svg = d3.select("svg");
-    // @ts-ignore
     width = +svg.node()!.getBoundingClientRect().width;
-    // @ts-ignore
     height = +svg.node()!.getBoundingClientRect().height;
 
     // Load the data, see: https://github.com/d3/d3/blob/main/CHANGES.md#changes-in-d3-50
